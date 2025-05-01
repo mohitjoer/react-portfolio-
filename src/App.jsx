@@ -22,7 +22,7 @@ function App() {
       Generate
     </button>
     </>
-  )
+  );
 }
 
 export default App
