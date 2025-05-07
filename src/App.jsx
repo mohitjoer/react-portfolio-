@@ -1,5 +1,7 @@
 import React from 'react';
-import Button from '@mui/material/Button';
+import Searchbox from './component/Searchbox';
+import InfoBox from './component/infobox';
+
 import './App.css'
 
 function App() {
@@ -7,7 +9,8 @@ function App() {
 
   return (
     <>
-      <Button variant="outlined" size="medium">click</Button>
+      <Searchbox />
+      <InfoBox />
     </>
   )
 }
