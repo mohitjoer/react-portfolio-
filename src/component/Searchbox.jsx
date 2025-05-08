@@ -1,13 +1,14 @@
 import Box from '@mui/material/Box';
 import { Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Searchbox({ UpdateInfo }) {
     const API_URL = "https://api.openweathermap.org/data/2.5/weather";
     const apiKey = "6ed30c8707727b5cd9c13653d360dadb";
 
     const [city, setCity] = useState("");
+    const [error, setError] = useState("");
 
     let handleChange = (event) => {
         setCity(event.target.value);
@@ -32,9 +33,20 @@ export default function Searchbox({ UpdateInfo }) {
             UpdateInfo(newInfo);
         } catch (error) {
             console.error("Error fetching weather data:", error);
+            setError("City not found. Please try again.");
         }
         setCity("");
     };
+
+    useEffect(() => {
+        if (error) {
+            const timer = setTimeout(() => {
+                setError("");
+            }, 5000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [error]);
 
     return (
         <div className="searchbox">
@@ -49,9 +61,11 @@ export default function Searchbox({ UpdateInfo }) {
                     required
                 />
                 <br />
+                {error && <div style={{ color: 'red' }}>{error}</div>}
                 <br />
                 <Button variant="contained" type="submit">Search</Button>
             </form>
+    
         </div>
     );
 }
